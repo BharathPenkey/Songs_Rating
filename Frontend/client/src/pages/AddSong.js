@@ -6,8 +6,8 @@ function AddSong() {
   const navigate = useNavigate();
   const [image, setImage] = useState('');
   const [songs, setSongs] = useState([]);
-  const [newSong, setNewSong] = useState({ name: '', releaseDate: '', cover: '', artists: [] });
- const artist=['Anne Marie','Ed sheran','dan reynolds']
+  const [newSong, setNewSong] = useState({ name: '', releaseDate: '', cover: '', artists: '' });
+//  const artist=['Anne Marie','Ed sheran','dan reynolds']
   // Handle input changes for newSong
   const HandleChange = (e) => {
     const { name, value } = e.target;
@@ -17,10 +17,10 @@ function AddSong() {
   // Handle adding a song
   const HandleAddSong = () => {
     axios
-      .post('http://localhost:5002/api/songs', newSong)
+      .post('http://localhost:5007/api/songs', newSong)
       .then((response) => {
         setSongs([...songs, response.data]);
-        setNewSong({ name: '', releaseDate: '', cover: '', artists: [] });
+        setNewSong({ name: '', releaseDate: '', cover: '', artists: '' });
         navigate('/');
       })
       .catch((error) => {
@@ -54,7 +54,7 @@ function AddSong() {
           <form>
             <h3>Adding a new song</h3>
             <div className="mb-2 form-group">
-              <label htmlFor="sn">Song Name</label>
+              <label For="sn">Song Name</label>
               <input
                 id="sn"
                 name="name"
@@ -66,7 +66,7 @@ function AddSong() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="dr">Date Released</label>
+              <label For="dr">Date Released</label>
               <input
                 id="dr"
                 name="releaseDate"
@@ -78,7 +78,7 @@ function AddSong() {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="artwork">ArtWork</label>
+              <label For="artwork">ArtWork</label>
               <input
                 id="artwork"
                 name="cover"
@@ -96,26 +96,36 @@ function AddSong() {
             <div className="mb-2">
               <label>Artist</label>
               <div className="sec-btn">
-                <select
+              <input
+                id="dr"
+                name="artists"
+                className="form-control thicker-border"
+                type="string"
+                placeholder="singers"
+                value={newSong.artists}
+                onChange={HandleChange}
+              />
+              <div>
+                {/* <select
                   id="idname"
                   className="form-control mt-2 gap-2"
                   name="artists"
                   onChange={HandleChange}
-                >
-                   {artist.map(value =>(
-                     <option value="artist1">{[...artist]}</option>
-                   ))} 
+                > */}
+                   {/* {artist.map(value =>
+                     <option >{value}</option> */}
+                   {/* )}  */}
                   {/* <option value="artist1">opt 1</option>
                   <option value="artist2">opt 2</option>
                   <option value="artist3">opt 3</option> */}
-                </select><div>
-                <Link to="addadmin"><button id="addartist" className="btn btn-secondary rounded-0">+ Artist</button>
-              </Link>
+                {/* </select><div> */}
+      {/* <button id="addartist" className="btn btn-secondary rounded-0" navigate='/adartist'>+ Artist</button> */}
+      <button className="btn btn-secondary rounded-0" onClick={() => { navigate("/addartist") }} >Add artist</button>  
                 </div>
                
               </div>
             </div>
-            <div className="mt-3" id="btn-can-sav">
+            <div className="mt-2" id="btn-can-sav">
               <Link to="/">
                 <button className="btn btn-secondary rounded-0 shadow">Cancel</button>
               </Link>
